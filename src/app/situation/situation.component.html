@@ -1,0 +1,5 @@
+<input class="utterance" placeholder="User say" [(ngModel)]="utterance">
+
+<select class="intents" [(ngModel)]="intent">
+  <option *ngFor="let i of intents" value="{{i}}">{{i}}</option>
+</select>
