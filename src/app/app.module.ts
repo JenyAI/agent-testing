@@ -8,7 +8,9 @@ import { AppComponent } from './app.component';
 import { SituationComponent } from './situation/situation.component';
 
 import { AgentService } from './_services/agent.service';
+import { DialogFlowService } from './_services/dialogflow.service';
 import { SituationService } from './_services/situation.service';
+import { UuidService } from './_services/uuid.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { SituationService } from './_services/situation.service';
   ],
   providers: [
     AgentService,
-    SituationService
+    DialogFlowService,
+    SituationService,
+    UuidService
   ],
   bootstrap: [ AppComponent ]
 })
