@@ -5,18 +5,20 @@ export class SituationService {
 
   private situations: any[ ] = [
     {
+      id: 0,
       utterance: 'hey!'
     },
     {
+      id: 1,
       utterance: 'how are you?'
     },
     {
+      id: 2,
       utterance: 'how are you?',
-      intent: 'blo'
     },
     {
+      id: 3,
       utterance: 'how are you?',
-      intent: 'bla'
     }
   ];
 
@@ -30,5 +32,17 @@ export class SituationService {
   */
   public getSituations(): any[ ] {
     return this.situations;
+  }
+
+  /*  Update a situation
+
+    PARAMS
+      situation (object)
+
+    RETURN
+      none
+  */
+  public updateSituation(situation): void {
+    this.situations[situation.id] = situation;
   }
 }

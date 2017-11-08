@@ -14,9 +14,6 @@ export class PerformTestComponent {
 
   private situations: any[ ] = this.situationService.getSituations();
 
-  private maxSimultaneousQueries: number = 5;
-  private simultaneousQueries: number = 0;
-
   constructor(
     private agentService: AgentService,
     private situationService: SituationService
@@ -37,7 +34,7 @@ export class PerformTestComponent {
       if (!situation.utterance || situation.utterance === '') return;
 
       this.agentService.sendMessage(situation.utterance).subscribe((raw: any) => {
-        console.log(raw);
+        let triggeredIntentName = raw.result.metadata.intentName;
       });
     });
   }

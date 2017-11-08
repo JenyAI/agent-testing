@@ -1,5 +1,5 @@
-<input class="utterance" placeholder="User say" [(ngModel)]="utterance">
+<input class="utterance" placeholder="User say" [(ngModel)]="data.utterance">
 
-<select class="intents" [(ngModel)]="intent">
-  <option *ngFor="let i of intents" value="{{i}}">{{i}}</option>
+<select class="intents" (change)="onSelectedIntent($event)">
+  <option *ngFor="let i of intents" [value]="i">{{i}}</option>
 </select>
