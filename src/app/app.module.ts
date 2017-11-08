@@ -11,7 +11,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { SituationComponent } from './situation/situation.component';
 
 import { AgentService } from './_services/agent.service';
-import { DialogFlowService } from './_services/dialogflow.service';
+import { QueryService } from './_services/query.service';
 import { SituationService } from './_services/situation.service';
 import { UuidService } from './_services/uuid.service';
 
@@ -46,7 +46,7 @@ import { UuidService } from './_services/uuid.service';
   ],
   providers: [
     AgentService,
-    DialogFlowService,
+    QueryService,
     SituationService,
     UuidService
   ],

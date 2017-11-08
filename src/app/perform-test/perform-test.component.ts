@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { DialogFlowService } from '../_services/dialogflow.service';
+import { QueryService } from '../_services/query.service';
 import { SituationService } from '../_services/situation.service';
 
 @Component ({
@@ -18,7 +18,7 @@ export class PerformTestComponent {
   private simultaneousQueries: number = 0;
 
   constructor(
-    private dialogFlowService: DialogFlowService,
+    private QueryService: QueryService,
     private situationService: SituationService
   ) {
     this.performTest();
@@ -38,7 +38,7 @@ export class PerformTestComponent {
 
       this.simultaneousQueries++;
 
-      this.dialogFlowService.sendMessage(situation.utterance).subscribe((raw: any) => {
+      this.QueryService.sendMessage(situation.utterance).subscribe((raw: any) => {
         console.log(raw);
 
         this.simultaneousQueries--;

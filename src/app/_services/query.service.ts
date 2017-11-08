@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 import { UuidService } from './uuid.service'
 
 @Injectable()
-export class DialogFlowService {
+export class QueryService {
 
   private sessionId = this.uuidService.generateUuid();
 
