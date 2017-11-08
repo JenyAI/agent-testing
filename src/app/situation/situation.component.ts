@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AgentService } from '../_services/agent.service';
 
@@ -7,12 +8,24 @@ import { AgentService } from '../_services/agent.service';
   templateUrl: 'situation.component.html',
   styleUrls: [ 'situation.component.scss' ]
 })
-export class SituationComponent {
+export class SituationComponent implements OnInit, OnDestroy {
 
-  private intents: string[] = this.AgentService.getIntents();
+  private intents: string[ ];
 
   @Input() private utterance: string = '';
   @Input() private intent: string = '';
 
-  constructor(private AgentService: AgentService) { }
+  private subscription: Subscription;
+
+  constructor(private agentService: AgentService) { }
+
+  ngOnInit(): void {
+    this.subscription = this.agentService.subscribeToIntentsName((intentsName: string[ ]) => {
+      this.intents = intentsName;
+    });
+  }
+
+  ngOnDestroy(): void {
+
+  }
 }

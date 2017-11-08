@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { QueryService } from '../_services/query.service';
+import { AgentService } from '../_services/agent.service';
 import { SituationService } from '../_services/situation.service';
 
 @Component ({
@@ -18,7 +18,7 @@ export class PerformTestComponent {
   private simultaneousQueries: number = 0;
 
   constructor(
-    private QueryService: QueryService,
+    private agentService: AgentService,
     private situationService: SituationService
   ) {
     this.performTest();
@@ -36,25 +36,9 @@ export class PerformTestComponent {
     this.situations.forEach(situation => {
       if (!situation.utterance || situation.utterance === '') return;
 
-      this.simultaneousQueries++;
-
-      this.QueryService.sendMessage(situation.utterance).subscribe((raw: any) => {
+      this.agentService.sendMessage(situation.utterance).subscribe((raw: any) => {
         console.log(raw);
-
-        this.simultaneousQueries--;
       });
     });
-  }
-
-  /*  Pause the program.
-
-    PARAMS
-      none
-
-    RETURN
-      none
-  */
-  private delay(ms: number): Promise<{}> {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
