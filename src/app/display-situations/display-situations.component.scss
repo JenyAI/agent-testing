@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 :host {
   display: flex;
   flex-flow: column;
@@ -8,8 +10,33 @@
   padding: 0.5em;
 }
 
+button {
+  display: block;
+  box-sizing: border-box;
+  padding: 1em 2em;
+
+  background-color: $blue;
+  border: 2px solid $blue;
+  border-radius: 5px;
+  color: $white;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:active {
+    background-color: $blue-l;
+    color: $black;
+  }
+}
+
 #situations {
   flex-grow: 1;
 
   overflow-y: auto;
+}
+
+#actions {
+  flex: 0 0 auto;
+
+  box-sizing: border-box;
+  padding: 0.5em;
 }

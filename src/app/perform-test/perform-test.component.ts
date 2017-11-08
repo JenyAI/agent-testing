@@ -35,6 +35,7 @@ export class PerformTestComponent {
 
       this.agentService.sendMessage(situation.utterance).subscribe((raw: any) => {
         let triggeredIntentName = raw.result.metadata.intentName;
+        console.log(triggeredIntentName === situation.intentName);
       });
     });
   }

@@ -3,24 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SituationService {
 
-  private situations: any[ ] = [
-    {
-      id: 0,
-      utterance: 'hey!'
-    },
-    {
-      id: 1,
-      utterance: 'how are you?'
-    },
-    {
-      id: 2,
-      utterance: 'how are you?',
-    },
-    {
-      id: 3,
-      utterance: 'how are you?',
-    }
-  ];
+  private id: number = 0;
+
+  private situations: any[ ] = [ ];
 
   /*  Get the list of situations
 
@@ -32,6 +17,24 @@ export class SituationService {
   */
   public getSituations(): any[ ] {
     return this.situations;
+  }
+
+  /*  Create a situation
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  public createSituation(): void {
+    let situation = {
+      id: this.id
+    };
+
+    this.id++;
+
+    this.situations.push(situation);
   }
 
   /*  Update a situation

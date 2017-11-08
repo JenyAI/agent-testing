@@ -1,3 +1,7 @@
 <div id="situations">
   <app-situation *ngFor="let s of situations" [data]="s"></app-situation>
 </div>
+
+<div id="actions">
+  <button (click)="createSituation()"> New </button>
+</div>
