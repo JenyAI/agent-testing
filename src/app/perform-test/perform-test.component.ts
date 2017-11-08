@@ -36,8 +36,6 @@ export class PerformTestComponent {
     this.situations.forEach(situation => {
       if (!situation.utterance || situation.utterance === '') return;
 
-      while (this.simultaneousQueries >= this.maxSimultaneousQueries) { }
-
       this.simultaneousQueries++;
 
       this.dialogFlowService.sendMessage(situation.utterance).subscribe((raw: any) => {

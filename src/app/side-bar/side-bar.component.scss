@@ -1,0 +1,30 @@
+@import "../../styles/colors.scss";
+
+:host {
+  display: flex;
+  flex-flow: column;
+  flex: 0 0 350px;
+
+  box-sizing: border-box;
+  padding: 0.5em;
+}
+
+a,
+a:visited
+{
+  display: block;
+
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  padding: 1em;
+
+  box-shadow: 0 3px 3px $grey;
+
+  color: $black;
+  text-decoration: none;
+  text-indent: 1em;
+
+  &:hover {
+    background-color: $blue-l;
+  }
+}

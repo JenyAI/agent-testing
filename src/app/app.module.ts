@@ -7,6 +7,7 @@ import { RouterModule }   from '@angular/router';
 import { AppComponent } from './app.component';
 import { DisplaySituationsComponent } from './display-situations/display-situations.component';
 import { PerformTestComponent } from './perform-test/perform-test.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
 import { SituationComponent } from './situation/situation.component';
 
 import { AgentService } from './_services/agent.service';
@@ -19,6 +20,7 @@ import { UuidService } from './_services/uuid.service';
     AppComponent,
     DisplaySituationsComponent,
     PerformTestComponent,
+    SideBarComponent,
     SituationComponent
   ],
   imports: [
