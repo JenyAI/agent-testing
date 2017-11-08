@@ -15,21 +15,25 @@ export class AgentService {
 
   private intents: any[ ];
   private intentsName: string[ ];
+  private subjectIntentsName: BehaviorSubject<string[ ]> = new BehaviorSubject(['']);
 
-  constructor(private http: HttpClient, private uuidService: UuidService) {
+  constructor(
+    private http: HttpClient,
+    private uuidService: UuidService
+  ) {
     this.getIntentsFromAgent();
   }
 
-  /*  Provide the list of intents
+  /*  Subscribe an observer on intents name update.
 
     PARAMS
-      none
+      observer (function)
 
     RETURN
-      (string[ ]) list of intents name
+      (Subscription)
   */
-  public getIntentsName(): string[ ] {
-    return this.intentsName;
+  public subscribeToIntentsName(observer): Subscription {
+    return this.subjectIntentsName.subscribe(observer);
   }
 
   /*  Send a message to the agent.
@@ -83,6 +87,7 @@ export class AgentService {
     .subscribe((raw: any[ ]) => {
       this.intents = raw;
       this.intentsName = this.intents.map(i => i.name).sort();
+      this.subjectIntentsName.next(this.intentsName);
     });
   }
 }
