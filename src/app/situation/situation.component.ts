@@ -12,10 +12,9 @@ import { SituationService } from '../_services/situation.service';
 export class SituationComponent implements OnInit, OnDestroy {
 
   private intents: string[ ];
+  private subscription: Subscription;
 
   @Input() private data: any;
-
-  private subscription: Subscription;
 
   constructor(
     private agentService: AgentService,
@@ -23,8 +22,8 @@ export class SituationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscription = this.agentService.subscribeToIntentsName((intentsName: string[ ]) => {
-      this.intents = intentsName;
+    this.subscription = this.agentService.subscribeToIntentsName((intents: string[ ]) => {
+      this.intents = intents;
     });
   }
 
