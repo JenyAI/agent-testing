@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AgentService } from '../_services/agent.service';
@@ -10,15 +9,24 @@ import { SituationService } from '../_services/situation.service';
   templateUrl: 'perform-test.component.html',
   styleUrls: [ 'perform-test.component.scss' ]
 })
-export class PerformTestComponent {
+export class PerformTestComponent implements OnInit, OnDestroy {
 
-  private situations: any[ ] = this.situationService.getSituations();
+  private situations: any[ ] = [ ];
+  private subscription: Subscription;
 
   constructor(
     private agentService: AgentService,
     private situationService: SituationService
-  ) {
-    this.performTest();
+  ) { }
+
+  ngOnInit(): void {
+    this.subscription = this.situationService.subscribeToSituations((situations: string[ ]) => {
+      this.situations = situations;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   /*  Perform test on agent.
