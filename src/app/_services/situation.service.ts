@@ -51,7 +51,8 @@ export class SituationService {
       none
   */
   public updateSituation(situation): void {
-    this.situations[situation.id] = situation;
+    let oldSituation = this.situations.find(s => s.id == situation.id);
+    oldSituation = situation;
     this.subjectSituation.next(this.situations);
   }
 
@@ -64,7 +65,6 @@ export class SituationService {
       none
   */
   public deleteSituation(id): void {
-    console.log(id);
     this.situations = this.situations.filter(s => {
       return s.id != id;
     });
