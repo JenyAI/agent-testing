@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { SituationService } from '../_services/situation.service';
 
@@ -7,11 +8,22 @@ import { SituationService } from '../_services/situation.service';
   templateUrl: './display-situations.component.html',
   styleUrls: [ './display-situations.component.scss' ]
 })
-export class DisplaySituationsComponent {
+export class DisplaySituationsComponent implements OnInit, OnDestroy  {
 
-  private situations: any[ ] = this.situationService.getSituations();
+  private situations: any[ ];
+  private subscription: Subscription;
 
   constructor(private situationService: SituationService) { }
+
+  ngOnInit(): void {
+    this.subscription = this.situationService.subscribeToSituations((situations: string[ ]) => {
+      this.situations = situations;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   /*  Trigger the event to create a new situation
 
