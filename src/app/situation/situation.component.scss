@@ -10,7 +10,7 @@
 button {
   display: block;
   box-sizing: border-box;
-  margin-right: 0.5em;
+  margin: 0 0.25em;
   padding: 1em;
 
   background-color: $blue;
@@ -42,7 +42,7 @@ button {
 {
   box-sizing: border-box;
   padding: 1em;
-  margin-bottom: 0.5em;
+  margin: 0 0.25em;
 
   background-color: $transparent;
   border: none;
@@ -55,8 +55,6 @@ button {
 
 .utterance {
   flex-grow: 2;
-
-  margin-right: 0.5em;
 }
 
 .intents {
