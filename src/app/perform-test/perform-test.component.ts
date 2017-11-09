@@ -11,6 +11,8 @@ import { SituationService } from '../_services/situation.service';
 })
 export class PerformTestComponent implements OnInit, OnDestroy {
 
+  private results: string[ ] = [ ];
+
   private situations: any[ ] = [ ];
   private subscription: Subscription;
 
@@ -43,7 +45,11 @@ export class PerformTestComponent implements OnInit, OnDestroy {
 
       this.agentService.sendMessage(situation.utterance).subscribe((raw: any) => {
         let triggeredIntentName = raw.result.metadata.intentName;
-        console.log(triggeredIntentName === situation.intentName);
+
+        let result = triggeredIntentName === situation.intentName ? 'success: ' : 'fail: ';
+        result += situation.utterance + ' → ' + triggeredIntentName + ' (obtained) - ' + situation.intentName + ' (expected)';
+
+        this.results.push(result);
       });
     });
   }
