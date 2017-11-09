@@ -31,8 +31,28 @@ export class SituationComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  /*  Select an intent name.
+
+    PARAMS
+      event (object)
+
+    RETURN
+      none
+  */
   onSelectedIntent(event: any): void {
     this.data.intentName = event.target.value;
     this.situationService.updateSituation(this.data);
+  }
+
+  /*  Select an intent name.
+
+    PARAMS
+      event (object)
+
+    RETURN
+      none
+  */
+  deleteSituation(): void {
+    this.situationService.deleteSituation(this.data.id);
   }
 }
