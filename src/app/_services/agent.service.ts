@@ -10,7 +10,7 @@ import { UuidService } from './uuid.service'
 @Injectable()
 export class AgentService {
 
-  private devKey: string = 'bdc62c870d424f29a0574cf3c3667beb';
+  private devKey: string = '';
   private sessionId = this.uuidService.generateUuid();
 
   private intents: any[ ];
@@ -20,7 +20,30 @@ export class AgentService {
   constructor(
     private http: HttpClient,
     private uuidService: UuidService
-  ) {
+  ) { }
+
+  /*  Get the dev key.
+
+    PARAMS
+      none
+
+    RETURN
+      (string) the dev key
+  */
+  public getKey(): string {
+    return this.devKey;
+  }
+
+  /*  Update the dev key.
+
+    PARAMS
+      devKey (string)
+
+    RETURN
+      none
+  */
+  public updateKey(devKey): void {
+    this.devKey = devKey;
     this.getIntentsFromAgent();
   }
 
