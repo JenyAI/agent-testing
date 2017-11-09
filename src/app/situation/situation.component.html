@@ -1,8 +1,3 @@
 <input class="utterance" placeholder="User say" [(ngModel)]="data.utterance">
 
-<select class="intents" (change)="onSelectedIntent($event)">
-  <option value=""> </option>
-  <option *ngFor="let i of intents" [value]="i" [selected]="i === data.intentName">{{i}}</option>
-</select>
-
 <button class="delete" (click)="deleteSituation()"> Delete </button>

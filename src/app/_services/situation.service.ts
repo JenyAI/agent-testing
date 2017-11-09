@@ -8,6 +8,8 @@ export class SituationService {
 
   private id: number = 0;
 
+  private selectedIntentName: string = '';
+
   private situations: any[ ] = [ ];
   private subjectSituation: BehaviorSubject<any[]> = new BehaviorSubject([ ]);
 
@@ -26,20 +28,45 @@ export class SituationService {
   /*  Create a situation
 
     PARAMS
-      none
+      intentName (string)
 
     RETURN
       none
   */
-  public createSituation(): void {
+  public createSituation(intentName): void {
     let situation = {
-      id: this.id
+      id: this.id,
+      intentName: intentName
     };
 
     this.id++;
 
     this.situations.push(situation);
     this.subjectSituation.next(this.situations);
+  }
+
+  /*  Get the selected intent name.
+
+    PARAMS
+      none
+
+    RETURN
+      (string) selected intent name
+  */
+  public getSelectedIntentName(): string {
+    return this.selectedIntentName;
+  }
+
+  /*  Update the selected intent name.
+
+    PARAMS
+      intentName (string)
+
+    RETURN
+      none
+  */
+  public updateSelectedIntentName(intentName): void {
+    this.selectedIntentName = intentName;
   }
 
   /*  Update a situation

@@ -1,5 +1,12 @@
+<div id="menu">
+  <select class="intents" (change)="onSelectedIntent($event)">
+    <option value=""> </option>
+    <option *ngFor="let i of intents" [value]="i" [selected]="i === selectedIntentName">{{i}}</option>
+  </select>
+</div>
+
 <div id="situations">
-  <app-situation *ngFor="let s of situations" [data]="s"></app-situation>
+  <app-situation *ngFor="let s of filteredSituations" [data]="s"></app-situation>
 </div>
 
 <div id="actions">

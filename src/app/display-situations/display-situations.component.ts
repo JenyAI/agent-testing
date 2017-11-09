@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
+import { AgentService } from '../_services/agent.service';
 import { SituationService } from '../_services/situation.service';
 
 @Component({
@@ -10,19 +11,62 @@ import { SituationService } from '../_services/situation.service';
 })
 export class DisplaySituationsComponent implements OnInit, OnDestroy  {
 
-  private situations: any[ ];
-  private subscription: Subscription;
+  private intents: string[ ];
+  private agentSubscription: Subscription;
 
-  constructor(private situationService: SituationService) { }
+  private selectedIntentName: string = this.situationService.getSelectedIntentName();
+
+  private situations: any[ ];
+  private situationSubscription: Subscription;
+
+  private filteredSituations: any[ ];
+
+  constructor(
+    private agentService: AgentService,
+    private situationService: SituationService
+  ) { }
 
   ngOnInit(): void {
-    this.subscription = this.situationService.subscribeToSituations((situations: string[ ]) => {
+    this.agentSubscription = this.agentService.subscribeToIntentsName((intents: string[ ]) => {
+      this.intents = intents;
+    });
+
+    this.situationSubscription = this.situationService.subscribeToSituations((situations: string[ ]) => {
       this.situations = situations;
+      this.updateFilteredSituations();
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.agentSubscription.unsubscribe();
+
+    this.situationSubscription.unsubscribe();
+  }
+
+  /*  Select an intent name.
+
+    PARAMS
+      event (object)
+
+    RETURN
+      none
+  */
+  private onSelectedIntent(event: any): void {
+    this.selectedIntentName = event.target.value;
+    this.situationService.updateSelectedIntentName(this.selectedIntentName);
+    this.updateFilteredSituations();
+  }
+
+  /*  Update the filtered situations list.
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  private updateFilteredSituations(): void {
+    this.filteredSituations = this.situations.filter((s: any) => s.intentName === this.selectedIntentName);
   }
 
   /*  Trigger the event to create a new situation
@@ -34,6 +78,6 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
       none
   */
   private createSituation(): void {
-    this.situationService.createSituation();
+    this.situationService.createSituation(this.selectedIntentName);
   }
 }
