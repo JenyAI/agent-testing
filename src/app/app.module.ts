@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule }   from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { AgentInformationComponent } from './agent-information/agent-information.component';
 import { DisplaySituationsComponent } from './display-situations/display-situations.component';
 import { PerformTestComponent } from './perform-test/perform-test.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
@@ -17,6 +18,7 @@ import { UuidService } from './_services/uuid.service';
 @NgModule({
   declarations: [
     AppComponent,
+    AgentInformationComponent,
     DisplaySituationsComponent,
     PerformTestComponent,
     SideBarComponent,
@@ -29,16 +31,20 @@ import { UuidService } from './_services/uuid.service';
     RouterModule.forRoot(
       [
         {
-          path: 'test',
-          component: PerformTestComponent
+          path: 'information',
+          component: AgentInformationComponent
         },
         {
           path: 'situations',
           component: DisplaySituationsComponent
         },
         {
+          path: 'test',
+          component: PerformTestComponent
+        },
+        {
           path: '**',
-          redirectTo: '/situations'
+          redirectTo: '/information'
         }
       ]
     )
