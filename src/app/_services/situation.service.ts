@@ -33,10 +33,11 @@ export class SituationService {
     RETURN
       none
   */
-  public createSituation(intentName): void {
+  public createSituation(intentName: string, utterance: string = ''): void {
     let situation = {
       id: this.id,
-      intentName: intentName
+      intentName: intentName,
+      utterance: utterance
     };
 
     this.id++;
