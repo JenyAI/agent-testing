@@ -6,11 +6,17 @@
 </div>
 
 <div id="situations">
-  <app-situation *ngFor="let s of filteredSituations" [data]="s"></app-situation>
+  <app-situation *ngFor="let s of displayedSituations" [data]="s"></app-situation>
 </div>
 
 <div id="actions">
   <button class="primary" (click)="onCreateSituation()"> New situation </button>
+
+  <div class="">
+    <button class="primary" (click)="onPreviousPage()"> < </button>
+    {{page + 1}} / {{totalPages}}
+    <button class="primary" (click)="onNextPage()"> > </button>
+  </div>
 
   <button class="secondary" (click)="onGetUserSays()"> Get User Says </button>
 </div>
