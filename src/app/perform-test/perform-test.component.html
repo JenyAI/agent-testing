@@ -6,6 +6,12 @@
   <div *ngIf="status === 'in-progress'">
     <h1> In Progress ({{testsPerformed}} / {{totalTests}}) </h1>
 
+    <div>
+      <p> <strong> Success rate:</strong> {{successRate}}%</p>
+
+      <p> <strong> successes / failures:</strong> {{successes}} / {{failures}}</p>
+    </div>
+
     <table>
       <tr class="header">
         <th class="utterance">User says</th>
@@ -24,7 +30,7 @@
     <h1> Done </h1>
 
     <div>
-      <p> <strong> Tests performed:</strong> {{totalTests}}</p>
+      <p> <strong> Tests performed:</strong> {{testsPerformed}}</p>
 
       <p> <strong> Success rate:</strong> {{successRate}}%</p>
 
@@ -47,5 +53,8 @@
 </div>
 
 <div id="actions">
-  <button (click)="performTests()"> Perform test </button>
+  <button (click)="performTests()">
+    <span *ngIf="status === 'ready' || status === 'done'">Perform test</span>
+    <span *ngIf="status === 'in-progress'">End test</span>
+  </button>
 </div>

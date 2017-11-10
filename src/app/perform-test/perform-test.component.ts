@@ -26,9 +26,10 @@ export class PerformTestComponent implements OnInit, OnDestroy {
   private successes: number = 0;
   private failures: number = 0;
   private successRate = 0.0;
+  private testSubscription: Subscription;
 
   private situations: any[ ] = [ ];
-  private subscription: Subscription;
+  private situationsSubscription: Subscription;
 
   constructor(
     private agentService: AgentService,
@@ -36,13 +37,14 @@ export class PerformTestComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscription = this.situationService.subscribeToSituations((situations: string[ ]) => {
+    this.situationsSubscription = this.situationService.subscribeToSituations((situations: string[ ]) => {
       this.situations = situations;
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.testSubscription) this.testSubscription.unsubscribe();
+    this.situationsSubscription.unsubscribe();
   }
 
   /*  Perform test on agent.
@@ -55,19 +57,26 @@ export class PerformTestComponent implements OnInit, OnDestroy {
   */
   private performTests(): void {
 
-    let testableSituations = this.prepareTest();
+    if (this.status === 'in-progress') {
+      this.endTest();
+    }
+    else {
+      let testableSituations = this.prepareTest();
 
-    Observable
-    .from(testableSituations)
-    .bufferCount(3)
-    .concatMap(situations => {
-      let tasks = situations.map(s => this.agentService.sendMessage(s.utterance).delay(1000).do(((raw: any) => this.checkResponse(raw, s))));
+      if (testableSituations.length === 0) return;
 
-      return Observable.forkJoin(tasks);
-    })
-    .subscribe(() => {
-      this.computeResults();
-    });
+      this.testSubscription = Observable
+      .from(testableSituations)
+      .bufferCount(3)
+      .concatMap(situations => {
+        let tasks = situations.map(s => this.agentService.sendMessage(s.utterance).delay(1000).do(((raw: any) => this.checkResponse(raw, s))));
+
+        return Observable.forkJoin(tasks);
+      })
+      .subscribe(() => {
+        this.computeResults();
+      });
+    }
   }
 
   /*  Prepare a test.
@@ -76,18 +85,20 @@ export class PerformTestComponent implements OnInit, OnDestroy {
       none
 
     RETURN
-      none
+      (array of objects) situations to test
   */
   private prepareTest(): any[ ] {
 
     let testableSituations = this.situations.filter(s => s.utterance);
+    if (testableSituations.length === 0) return [ ];
 
+    this.results = [ ];
     this.status = 'in-progress';
     this.testsPerformed = 0;
     this.totalTests = testableSituations.length;
     this.successes = 0;
     this.failures = 0;
-    this.results = [ ];
+    this.successRate = 0.0;
 
     return testableSituations;
   }
@@ -132,7 +143,22 @@ export class PerformTestComponent implements OnInit, OnDestroy {
   */
   private computeResults(): void {
 
-    this.successRate = Math.floor(this.successes / this.totalTests * 100);
+    this.successRate = Math.floor(this.successes / this.testsPerformed * 1000) / 10;
+
+    if (this.testsPerformed === this.totalTests) this.endTest();
+  }
+
+  /*  End a test.
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  private endTest(): void {
+
+    this.testSubscription.unsubscribe();
     this.status = 'done';
   }
 }
