@@ -21,7 +21,7 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
   private displayedSituations: any[ ];
   private page: number = 0; // current page
   private totalPages: number = 0; // total number of page for this set of situations
-  private situationsPerPages: number = 10;  // number of situations displayed per page
+  private situationsPerPages: number = 20;  // number of situations displayed per page
 
   constructor(
     private agentService: AgentService,
