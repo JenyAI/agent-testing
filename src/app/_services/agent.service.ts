@@ -30,7 +30,7 @@ export class AgentService {
     private uuidService: UuidService
   ) {
     if (this.devKey) {
-      this.getIntentsFromAgent();
+      this.getIntents();
     }
   }
 
@@ -66,7 +66,7 @@ export class AgentService {
   */
   public updateKey(devKey): void {
     this.devKey = devKey;
-    this.getIntentsFromAgent();
+    this.getIntents();
   }
 
   /*  Subscribe an observer on intents name update.
@@ -128,14 +128,7 @@ export class AgentService {
     .from(intentsId)
     .bufferCount(1)
     .concatMap(ids => {
-      let tasks = ids.map(id => this.getIntentDetails(id).delay(2000).do((details: any) => {
-        details.userSays.forEach((us: any) => {
-          if (!us.isTemplate) {
-            let utterance = us.data.map((data: any) => data.text).join(' ');
-            this.situationService.createSituation(details.name, utterance);
-          }
-        });
-      }));
+      let tasks = ids.map(id => this.getIntentDetails(id).delay(2000));
 
       return Observable.forkJoin(tasks);
     })
@@ -160,7 +153,7 @@ export class AgentService {
     RETURN
       void
   */
-  private getIntentsFromAgent(): void {
+  private getIntents(): void {
 
     let url = `${environment.dialogflow.intentsUrl}?v=${environment.dialogflow.v}`;
 
@@ -194,7 +187,14 @@ export class AgentService {
       .set('Content-Type', 'application/json; charset=utf-8');
 
       let obs = {
-        next: (details) => {
+        next: (details: any) => {
+          details.userSays.forEach((us: any) => {
+            if (!us.isTemplate) {
+              let utterance = us.data.map((data: any) => data.text).join(' ');
+              this.situationService.createSituation(details.name, utterance);
+            }
+          });
+
           observer.next(details);
           observer.complete();
         },
