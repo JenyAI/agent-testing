@@ -18,15 +18,29 @@ export class SituationComponent {
     private situationService: SituationService
   ) { }
 
-  /*  Select an intent name.
+  /*  Request the deletion of the situation.
 
     PARAMS
-      event (object)
+      none
 
     RETURN
       none
   */
   deleteSituation(): void {
+
     this.situationService.deleteSituation(this.data.id);
+  }
+
+  /*  Request the deletion of the situation.
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  updateSituation(): void {
+
+    this.situationService.updateSituation(this.data);
   }
 }

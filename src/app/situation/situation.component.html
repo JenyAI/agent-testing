@@ -1,3 +1,5 @@
-<input class="utterance" placeholder="User say" [(ngModel)]="data.utterance">
+<input class="utterance" placeholder="User say"
+  [(ngModel)]="data.utterance"
+  (focusout)="updateSituation()" >
 
 <button class="delete" (click)="deleteSituation()"> Delete </button>
