@@ -34,6 +34,16 @@ export class AgentService {
     }
   }
 
+
+
+  /****************************************************************
+  /*
+  /*      INTERFACE
+  /*
+  /***************************************************************/
+
+
+
   /*  Get the dev key.
 
     PARAMS
@@ -103,30 +113,6 @@ export class AgentService {
     return observable;
   }
 
-  /*  Get the list of intents from the agent
-
-    PARAMS
-      none
-
-    RETURN
-      void
-  */
-  private getIntentsFromAgent(): void {
-
-    let url = `${environment.dialogflow.intentsUrl}?v=${environment.dialogflow.v}`;
-
-    let headers = new HttpHeaders()
-    .set('Authorization', `Bearer ${this.devKey}`)
-    .set('Content-Type', 'application/json; charset=utf-8');
-
-    this.http.get(url, { headers })
-    .subscribe((raw: any[ ]) => {
-      this.intents = raw;
-      this.intentsName = this.intents.map(i => i.name).sort();
-      this.subjectIntentsName.next(this.intentsName);
-    });
-  }
-
   /*  Get the details of all intents from the agent
 
     PARAMS
@@ -154,6 +140,40 @@ export class AgentService {
       return Observable.forkJoin(tasks);
     })
     .subscribe();
+  }
+
+
+
+  /****************************************************************
+  /*
+  /*      CORE
+  /*
+  /***************************************************************/
+
+
+
+  /*  Get the list of intents from the agent
+
+    PARAMS
+      none
+
+    RETURN
+      void
+  */
+  private getIntentsFromAgent(): void {
+
+    let url = `${environment.dialogflow.intentsUrl}?v=${environment.dialogflow.v}`;
+
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.devKey}`)
+    .set('Content-Type', 'application/json; charset=utf-8');
+
+    this.http.get(url, { headers })
+    .subscribe((raw: any[ ]) => {
+      this.intents = raw;
+      this.intentsName = this.intents.map(i => i.name).sort();
+      this.subjectIntentsName.next(this.intentsName);
+    });
   }
 
   /*  Get intent details from the agent
