@@ -21,8 +21,10 @@ export class AgentService {
   private sessionId = this.uuidService.generateUuid();
 
   private intents: any[ ];
+  private subjectIntents: BehaviorSubject<any[ ]> = new BehaviorSubject([ ]);
+
   private intentsName: string[ ];
-  private subjectIntentsName: BehaviorSubject<string[ ]> = new BehaviorSubject(['']);
+  private subjectIntentsName: BehaviorSubject<string[ ]> = new BehaviorSubject([ ]);
 
   constructor(
     private http: HttpClient,
@@ -69,7 +71,19 @@ export class AgentService {
     this.getIntents();
   }
 
-  /*  Subscribe an observer on intents name update.
+  /*  Subscribe an observer for intents update.
+
+    PARAMS
+      observer (function)
+
+    RETURN
+      (Subscription)
+  */
+  public subscribeToIntent(observer): Subscription {
+    return this.subjectIntents.subscribe(observer);
+  }
+
+  /*  Subscribe an observer for intents name update.
 
     PARAMS
       observer (function)
@@ -111,6 +125,19 @@ export class AgentService {
     });
 
     return observable;
+  }
+
+  /*  Get the details of one intents from the agent
+
+    PARAMS
+      id (string): id of the intent to retrieve details
+
+    RETURN
+      void
+  */
+  public getIntentDetailsFromAgent(id: string): void {
+
+    this.getIntentDetails(id).subscribe();
   }
 
   /*  Get the details of all intents from the agent
@@ -163,8 +190,13 @@ export class AgentService {
 
     this.http.get(url, { headers })
     .subscribe((raw: any[ ]) => {
-      this.intents = raw;
-      this.intentsName = this.intents.map(i => i.name).sort();
+      this.intents = raw.sort((i1: any, i2: any) => {
+        if (i1.name <= i2.name) return -1;
+        else return 1;
+      });
+      this.subjectIntents.next(this.intents);
+
+      this.intentsName = this.intents.map(i => i.name);
       this.subjectIntentsName.next(this.intentsName);
     });
   }
