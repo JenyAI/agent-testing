@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AgentService } from '../_services/agent.service';
@@ -9,7 +9,10 @@ import { SituationService } from '../_services/situation.service';
   templateUrl: 'situation.component.html',
   styleUrls: [ 'situation.component.scss' ]
 })
-export class SituationComponent {
+export class SituationComponent implements OnInit, OnDestroy {
+
+  private intents: string[ ];
+  private agentSubscription: Subscription;
 
   @Input() private data: any;
 
@@ -17,6 +20,16 @@ export class SituationComponent {
     private agentService: AgentService,
     private situationService: SituationService
   ) { }
+
+  ngOnInit(): void {
+    this.agentSubscription = this.agentService.subscribeToIntentsName((intents: string[ ]) => {
+      this.intents = intents;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.agentSubscription.unsubscribe();
+  }
 
   /*  Request the deletion of the situation.
 
@@ -26,7 +39,7 @@ export class SituationComponent {
     RETURN
       none
   */
-  deleteSituation(): void {
+  private onDeleteSituation(): void {
 
     this.situationService.deleteSituation(this.data.id);
   }
@@ -39,8 +52,22 @@ export class SituationComponent {
     RETURN
       none
   */
-  updateSituation(): void {
+  private onUpdateSituation(): void {
 
     this.situationService.updateSituation(this.data);
+  }
+
+  /*  Select an intent name.
+
+    PARAMS
+      event (object)
+
+    RETURN
+      none
+  */
+  private onSelectedIntent(event: any): void {
+    
+    this.data.intentName = event.target.value;
+    this.onUpdateSituation();
   }
 }
