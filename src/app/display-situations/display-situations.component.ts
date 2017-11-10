@@ -93,6 +93,32 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
     this.updateFilteredSituations();
   }
 
+  /*  Trigger the event to create a new situation
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  private onCreateSituation(): void {
+
+    this.situationService.createSituation(this.selectedIntent.name);
+  }
+
+  /*  Trigger the event to create a new situation
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  private onGetUserSays(): void {
+    
+    this.agentService.getIntentDetailsFromAgent(this.selectedIntent.id);
+  }
+
   /*  Update the filtered situations list.
 
     PARAMS
@@ -105,17 +131,5 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
 
     if (this.selectedIntent.id == ' ') this.filteredSituations = this.situations;
     else this.filteredSituations = this.situations.filter((s: any) => s.intentName === this.selectedIntent.name);
-  }
-
-  /*  Trigger the event to create a new situation
-
-    PARAMS
-      none
-
-    RETURN
-      none
-  */
-  private createSituation(): void {
-    this.situationService.createSituation(this.selectedIntent.name);
   }
 }

@@ -137,7 +137,7 @@ export class AgentService {
   */
   public getIntentDetailsFromAgent(id: string): void {
 
-    this.getIntentDetails(id).subscribe();
+    if (id && id != ' ') this.getIntentDetails(id).subscribe();
   }
 
   /*  Get the details of all intents from the agent
