@@ -1,9 +1,51 @@
 <div id="results">
-  <h1>Test</h1>
+  <div *ngIf="status === 'ready'">
+    <h1> Ready </h1>
+  </div>
 
-  <p *ngFor="let r of results">{{r}}</p>
+  <div *ngIf="status === 'in-progress'">
+    <h1> In Progress ({{testsPerformed}} / {{totalTests}}) </h1>
+
+    <table>
+      <tr class="header">
+        <th class="utterance">User says</th>
+        <th class="obtained">Obtained</th>
+        <th class="expected">Expected</th>
+      </tr>
+      <tr [class.success]="r.success" [class.fail]="!r.success" *ngFor="let r of results">
+        <td class="utterance"> {{r.utterance}} </td>
+        <td class="obtained"> {{r.obtainedIntent}} </td>
+        <td class="expected"> {{r.expectedIntent}} </td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="status === 'done'">
+    <h1> Done </h1>
+
+    <div>
+      <p> <strong> Tests performed:</strong> {{totalTests}}</p>
+
+      <p> <strong> Success rate:</strong> {{successRate}}%</p>
+
+      <p> <strong> successes / failures:</strong> {{successes}} / {{failures}}</p>
+    </div>
+
+    <table>
+      <tr class="header">
+        <th class="utterance">User says</th>
+        <th class="obtained">Obtained</th>
+        <th class="expected">Expected</th>
+      </tr>
+      <tr [class.success]="r.success" [class.fail]="!r.success" *ngFor="let r of results">
+        <td class="utterance"> {{r.utterance}} </td>
+        <td class="obtained"> {{r.obtainedIntent}} </td>
+        <td class="expected"> {{r.expectedIntent}} </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <div id="actions">
-  <button (click)="performTest()"> Perform test </button>
+  <button (click)="performTests()"> Perform test </button>
 </div>

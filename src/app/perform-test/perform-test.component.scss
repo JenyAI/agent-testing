@@ -28,6 +28,34 @@ button {
   }
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr {
+  box-sizing: border-box;
+  margin-bottom: 0.25em;
+  border-bottom: 2px solid $grey;
+
+  &[class*="header"] {
+    background-color: $blue-l;
+  }
+
+  &[class*="success"] {
+    background-color: $green;
+  }
+
+  &[class*="fail"] {
+    background-color: $red;
+  }
+}
+
+th, td {
+  box-sizing: border-box;
+  padding: 0.5em;
+}
+
 #results {
   flex-grow: 1;
 
