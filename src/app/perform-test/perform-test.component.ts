@@ -87,6 +87,7 @@ export class PerformTestComponent implements OnInit, OnDestroy {
     this.totalTests = testableSituations.length;
     this.successes = 0;
     this.failures = 0;
+    this.results = [ ];
 
     return testableSituations;
   }
