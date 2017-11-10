@@ -4,6 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
+  api: 'http://localhost:8080',
   dialogflow: {
     queryUrl: 'https://api.api.ai/v1/query',
     intentsUrl: 'https://api.api.ai/v1/intents',

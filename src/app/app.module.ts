@@ -14,6 +14,7 @@ import { SituationComponent } from './situation/situation.component';
 import { AgentService } from './_services/agent.service';
 import { SituationService } from './_services/situation.service';
 import { UuidService } from './_services/uuid.service';
+import { WebsocketService } from './_services/websocket.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { UuidService } from './_services/uuid.service';
   providers: [
     AgentService,
     SituationService,
-    UuidService
+    UuidService,
+    WebsocketService
   ],
   bootstrap: [ AppComponent ]
 })

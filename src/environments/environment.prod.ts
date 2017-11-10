@@ -1,4 +1,5 @@
 export const environment = {
+  api: 'https://agt-tstg.herokuapp.com/',
   dialogflow: {
     queryUrl: 'https://api.api.ai/v1/query/',
     intentsUrl: 'https://api.api.ai/v1/intents',
