@@ -66,8 +66,23 @@ export class SituationComponent implements OnInit, OnDestroy {
       none
   */
   private onSelectedIntent(event: any): void {
-    
+
     this.data.intentName = event.target.value;
     this.onUpdateSituation();
+  }
+
+  /*  Handle key down event in input handler.
+
+    PARAMS
+      event (object)
+      FocusSink (input object): used to redirect the focus on it and trigger situation update
+
+    RETURN
+      none
+  */
+  private onKeyDown(event, FocusSink): void {
+
+    // key: enter
+    if (event.keyCode === 13) FocusSink.focus();
   }
 }

@@ -1,10 +1,18 @@
 <input class="utterance" placeholder="User say"
   [(ngModel)]="data.utterance"
-  (focusout)="onUpdateSituation()" >
+  (focusout)="onUpdateSituation()"
+  (keydown)="onKeyDown($event, refSink)" >
 
 <select class="intents" (change)="onSelectedIntent($event)">
   <option value=""> </option>
-  <option *ngFor="let i of intents" [value]="i" [selected]="i === data.intentName">{{i}}</option>
+  <option
+    *ngFor="let i of intents"
+    [value]="i"
+    [selected]="i === data.intentName" >
+      {{i}}
+    </option>
 </select>
 
 <button class="delete" (click)="onDeleteSituation()"> Delete </button>
+
+<input #refSink type="text" style="width:0;overflow:hidden;opacity:0;">
