@@ -66,7 +66,8 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
       none
   */
   private updateFilteredSituations(): void {
-    this.filteredSituations = this.situations.filter((s: any) => s.intentName === this.selectedIntentName);
+    if (this.selectedIntentName == '') this.filteredSituations = this.situations;
+    else this.filteredSituations = this.situations.filter((s: any) => s.intentName === this.selectedIntentName);
   }
 
   /*  Trigger the event to create a new situation
