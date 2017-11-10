@@ -1,7 +1,7 @@
 <div id="menu">
   <select class="intents" (change)="onSelectedIntent($event)">
     <option value=""> </option>
-    <option *ngFor="let i of intents" [value]="i" [selected]="i === selectedIntentName">{{i}}</option>
+    <option *ngFor="let i of intents" [value]="i.id" [selected]="i.name === selectedIntent.name">{{i.name}}</option>
   </select>
 </div>
 

@@ -11,10 +11,9 @@ import { SituationService } from '../_services/situation.service';
 })
 export class DisplaySituationsComponent implements OnInit, OnDestroy  {
 
-  private intents: string[ ];
+  private intents: any[ ];
+  private selectedIntent: any;
   private agentSubscription: Subscription;
-
-  private selectedIntentName: string = this.situationService.getSelectedIntentName();
 
   private situations: any[ ];
   private situationSubscription: Subscription;
@@ -27,20 +26,55 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
   ) { }
 
   ngOnInit(): void {
-    this.agentSubscription = this.agentService.subscribeToIntentsName((intents: string[ ]) => {
+
+    this.init();
+
+    this.agentSubscription = this.agentService.subscribeToIntent((intents: any[ ]) => {
+
       this.intents = intents;
     });
 
     this.situationSubscription = this.situationService.subscribeToSituations((situations: string[ ]) => {
+
       this.situations = situations;
       this.updateFilteredSituations();
     });
+
+    this.findIntentById(this.situationService.getSelectedIntentId());
   }
 
   ngOnDestroy(): void {
     this.agentSubscription.unsubscribe();
 
     this.situationSubscription.unsubscribe();
+  }
+
+  /*  Initialize attributes.
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  private init(): void {
+
+    this.selectedIntent = { id: ' ', name: ' ' };
+  }
+
+  /*  Find the intent in the intents list by id.
+
+    PARAMS
+      id (string)
+
+    RETURN
+      none
+  */
+  private findIntentById(id): void {
+
+    let selectedIntent = this.intents.find(i => i.id == id);
+    if (selectedIntent) this.selectedIntent = selectedIntent;
+    else this.selectedIntent = { id: ' ', name: ' ' };
   }
 
   /*  Select an intent name.
@@ -52,8 +86,10 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
       none
   */
   private onSelectedIntent(event: any): void {
-    this.selectedIntentName = event.target.value;
-    this.situationService.updateSelectedIntentName(this.selectedIntentName);
+
+    this.findIntentById(event.target.value);
+
+    this.situationService.updateSelectedIntentId(this.selectedIntent.id);
     this.updateFilteredSituations();
   }
 
@@ -66,8 +102,9 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
       none
   */
   private updateFilteredSituations(): void {
-    if (this.selectedIntentName == '') this.filteredSituations = this.situations;
-    else this.filteredSituations = this.situations.filter((s: any) => s.intentName === this.selectedIntentName);
+
+    if (this.selectedIntent.id == ' ') this.filteredSituations = this.situations;
+    else this.filteredSituations = this.situations.filter((s: any) => s.intentName === this.selectedIntent.name);
   }
 
   /*  Trigger the event to create a new situation
@@ -79,6 +116,6 @@ export class DisplaySituationsComponent implements OnInit, OnDestroy  {
       none
   */
   private createSituation(): void {
-    this.situationService.createSituation(this.selectedIntentName);
+    this.situationService.createSituation(this.selectedIntent.name);
   }
 }
