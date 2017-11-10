@@ -12,9 +12,13 @@
 <div id="actions">
   <button class="primary" (click)="onCreateSituation()"> New situation </button>
 
-  <div class="">
+  <div id="actions-pages">
     <button class="primary" (click)="onPreviousPage()"> < </button>
-    {{page + 1}} / {{totalPages}}
+    <div style="padding: 0 5px; text-align:center;">
+      <div *ngIf="totalPages === 0"> 0 / 0 </div>
+      <div *ngIf="totalPages !== 0"> {{page + 1}} / {{totalPages}} </div>
+      <div> ({{displayedSituations.length}} situations) </div>
+    </div>
     <button class="primary" (click)="onNextPage()"> > </button>
   </div>
 
