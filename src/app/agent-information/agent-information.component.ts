@@ -25,4 +25,16 @@ export class AgentInformationComponent {
   private updateAgent(): void {
     this.agentService.updateKey(this.devKey);
   }
+
+  /*  Trigger event to retrieve all intents details from the agent.
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  private getIntentsDetailsFromAgent(): void {
+    this.agentService.getIntentsDetailsFromAgent();
+  }
 }

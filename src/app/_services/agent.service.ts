@@ -124,25 +124,36 @@ export class AgentService {
       this.intents = raw;
       this.intentsName = this.intents.map(i => i.name).sort();
       this.subjectIntentsName.next(this.intentsName);
-
-      // let intentsId = this.intents.map(i => i.id);
-      // Observable
-      // .from(intentsId)
-      // .bufferCount(1)
-      // .concatMap(ids => {
-      //   let tasks = ids.map(id => this.getIntentDetailFromAgent(id).delay(2000).do((details: any) => {
-      //     if (details.userSays && !details.userSays.isTemplate) {
-      //       details.userSays.forEach((us: any) => {
-      //         let utterance: string = us.data.map((data: any) => data.text).join(' ');
-      //         this.situationService.createSituation(details.name, utterance);
-      //       });
-      //     }
-      //   }));
-      //
-      //   return Observable.forkJoin(tasks);
-      // })
-      // .subscribe();
     });
+  }
+
+  /*  Get the details of all intents from the agent
+
+    PARAMS
+      none
+
+    RETURN
+      void
+  */
+  public getIntentsDetailsFromAgent(): void {
+
+    let intentsId = this.intents.map(i => i.id);
+    Observable
+    .from(intentsId)
+    .bufferCount(1)
+    .concatMap(ids => {
+      let tasks = ids.map(id => this.getIntentDetails(id).delay(2000).do((details: any) => {
+        details.userSays.forEach((us: any) => {
+          if (!us.isTemplate) {
+            let utterance = us.data.map((data: any) => data.text).join(' ');
+            this.situationService.createSituation(details.name, utterance);
+          }
+        });
+      }));
+
+      return Observable.forkJoin(tasks);
+    })
+    .subscribe();
   }
 
   /*  Get intent details from the agent
@@ -153,7 +164,7 @@ export class AgentService {
     RETURN
       (Observable<any>)
   */
-  private getIntentDetailFromAgent(id: string): Observable<any> {
+  private getIntentDetails(id: string): Observable<any> {
 
     let observable = new Observable(observer => {
       let url = `${environment.dialogflow.intentsUrl}/${id}?v=${environment.dialogflow.v}`;
