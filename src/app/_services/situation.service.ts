@@ -8,12 +8,14 @@ import { WebsocketService } from './websocket.service';
 @Injectable()
 export class SituationService {
 
-  private selectedIntentName: string = '';
+  // id of the selected intent
+  private selectedIntentId: string = '';
 
   private situations: any[ ] = [ ];
   private subjectSituation: BehaviorSubject<any[]> = new BehaviorSubject([ ]);
 
   constructor(private websocketService: WebsocketService) {
+    
     this.websocketService.addListener('situation-created').subscribe((situation: any) => this.onSituationCreated(situation));
 
     this.websocketService.addListener('situation-deleted').subscribe((id: string) => this.onSituationDeleted(id));
@@ -139,6 +141,7 @@ export class SituationService {
       (Subscription)
   */
   public subscribeToSituations(observer): Subscription {
+
     return this.subjectSituation.subscribe(observer);
   }
 
@@ -150,19 +153,21 @@ export class SituationService {
     RETURN
       (string) selected intent name
   */
-  public getSelectedIntentName(): string {
-    return this.selectedIntentName;
+  public getSelectedIntentId(): string {
+
+    return this.selectedIntentId;
   }
 
   /*  Update the selected intent name.
 
     PARAMS
-      intentName (string)
+      id (string): id of the freshly selected intent
 
     RETURN
       none
   */
-  public updateSelectedIntentName(intentName): void {
-    this.selectedIntentName = intentName;
+  public updateSelectedIntentId(id): void {
+
+    this.selectedIntentId = id;
   }
 }
