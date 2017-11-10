@@ -17,7 +17,7 @@ import { UuidService } from './uuid.service'
 @Injectable()
 export class AgentService {
 
-  private devKey: string = '';
+  private devKey: string = '4ffe49da578145459de27ba91c47b77f';
   private sessionId = this.uuidService.generateUuid();
 
   private intents: any[ ];
@@ -28,7 +28,11 @@ export class AgentService {
     private http: HttpClient,
     private situationService: SituationService,
     private uuidService: UuidService
-  ) { }
+  ) {
+    if (this.devKey) {
+      this.getIntentsFromAgent();
+    }
+  }
 
   /*  Get the dev key.
 
@@ -92,6 +96,7 @@ export class AgentService {
       this.http.post(url, body, { headers })
       .subscribe(raw => {
         observer.next(raw);
+        observer.complete();
       });
     });
 
