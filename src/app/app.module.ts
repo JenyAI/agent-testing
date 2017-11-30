@@ -14,6 +14,7 @@ import { SituationComponent } from './situation/situation.component';
 import { SkillComponent } from './skill/skill.component';
 
 import { AgentService } from './_services/agent.service';
+import { CardService } from './_services/card.service';
 import { SituationService } from './_services/situation.service';
 import { SkillService } from './_services/skill.service';
 import { UuidService } from './_services/uuid.service';
@@ -61,6 +62,7 @@ import { WebsocketService } from './_services/websocket.service';
   ],
   providers: [
     AgentService,
+		CardService,
     SituationService,
     SkillService,
     UuidService,
