@@ -6,6 +6,11 @@
   margin-bottom: 5px;
 
   background-color: $transparent;
+
+	&:hover {
+		background-color: $blue-l;
+		cursor: pointer;
+	}
 }
 
 div {

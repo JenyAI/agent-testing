@@ -13,6 +13,7 @@ export class SkillComponent implements OnInit, OnDestroy {
 	private skills: any[ ];
   private skillSubscription: Subscription;
 
+  @Input() private selected: boolean;
   @Input() private data: any;
 
   constructor(
@@ -29,20 +30,7 @@ export class SkillComponent implements OnInit, OnDestroy {
     this.skillSubscription.unsubscribe();
   }
 
-  /*  Request the deletion of the skill.
-
-    PARAMS
-      none
-
-    RETURN
-      none
-  */
-  private onDeleteSkill(): void {
-
-    this.skillService.deleteSkill(this.data.id);
-  }
-
-  /*  Request the deletion of the skill.
+  /*  Request the update of the skill.
 
     PARAMS
       none
@@ -53,19 +41,5 @@ export class SkillComponent implements OnInit, OnDestroy {
   private onUpdateSkill(): void {
 
     this.skillService.updateSkill(this.data);
-  }
-
-  /*  Select an intent name.
-
-    PARAMS
-      event (object)
-
-    RETURN
-      none
-  */
-  private onSelectedIntent(event: any): void {
-
-    this.data.intentName = event.target.value;
-    this.onUpdateSkill();
   }
 }
