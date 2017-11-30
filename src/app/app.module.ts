@@ -7,6 +7,7 @@ import { RouterModule }   from '@angular/router';
 import { AppComponent } from './app.component';
 import { AgentInformationComponent } from './agent-information/agent-information.component';
 import { CardComponent } from './card/card.component';
+import { DisplayCardsComponent } from './display-cards/display-cards.component';
 import { DisplaySituationsComponent } from './display-situations/display-situations.component';
 import { DisplaySkillsComponent } from './display-skills/display-skills.component';
 import { PerformTestComponent } from './perform-test/perform-test.component';
@@ -26,6 +27,7 @@ import { WebsocketService } from './_services/websocket.service';
     AppComponent,
     AgentInformationComponent,
 		CardComponent,
+		DisplayCardsComponent,
     DisplaySituationsComponent,
 		DisplaySkillsComponent,
     PerformTestComponent,
@@ -50,6 +52,10 @@ import { WebsocketService } from './_services/websocket.service';
         {
           path: 'skills',
           component: DisplaySkillsComponent
+        },
+        {
+          path: 'cards',
+          component: DisplayCardsComponent
         },
         {
           path: 'test',
