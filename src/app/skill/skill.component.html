@@ -1,0 +1,8 @@
+<div>
+	<input placeholder="Grade" [(ngModel)]="data.grade" (focusout)="onUpdateSkill()" >
+	<input placeholder="Chapter" [(ngModel)]="data.chapter" (focusout)="onUpdateSkill()" >
+	<input placeholder="Skill" [(ngModel)]="data.skill" (focusout)="onUpdateSkill()" >
+	<input placeholder="Subskill" [(ngModel)]="data.subskill" (focusout)="onUpdateSkill()" >
+	<input role="title" placeholder="Title" [(ngModel)]="data.title" (focusout)="onUpdateSkill()" >
+	<button class="delete" (click)="onDeleteSkill()"> - </button>
+</div>
