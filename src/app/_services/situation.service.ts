@@ -15,7 +15,7 @@ export class SituationService {
   private subjectSituation: BehaviorSubject<any[]> = new BehaviorSubject([ ]);
 
   constructor(private websocketService: WebsocketService) {
-    
+
     this.websocketService.addListener('situation-created').subscribe((situation: any) => this.onSituationCreated(situation));
 
     this.websocketService.addListener('situation-deleted').subscribe((id: string) => this.onSituationDeleted(id));
@@ -26,6 +26,16 @@ export class SituationService {
 
     this.websocketService.send('situation-get-all');
   }
+
+
+
+	/****************************************************************
+  /*
+  /*      WEBSOCKET EVENTS HANDLERS
+  /*
+  /***************************************************************/
+
+
 
   /*  Triggered when situation created on server.
 
@@ -83,6 +93,16 @@ export class SituationService {
     this.situations = situations;
     this.subjectSituation.next(this.situations);
   }
+
+
+
+	/****************************************************************
+  /*
+  /*      INTERFACE
+  /*
+  /***************************************************************/
+
+
 
   /*  Create a situation
 
