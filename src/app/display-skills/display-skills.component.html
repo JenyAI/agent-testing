@@ -1,0 +1,25 @@
+<div id="menu">
+	<input placeholder="Filter" [(ngModel)]="filter" (input)="updateDisplayedSkills()" >
+</div>
+
+<div id="content">
+  <app-skill *ngFor="let s of displayedSkills" [data]="s"></app-skill>
+</div>
+
+<div id="actions">
+  <button class="primary" (click)="onCreateSkill()"> + </button>
+
+  <div id="actions-pages">
+    <button class="primary" (click)="onPreviousPage()"> < </button>
+
+    <div style="padding: 0 5px; text-align:center;">
+      <div *ngIf="totalPages === 0"> 0 / 0 </div>
+      <div *ngIf="totalPages !== 0"> {{page + 1}} / {{totalPages}} </div>
+      <div> ({{displayedSkills.length}} skills) </div>
+    </div>
+
+    <button class="primary" (click)="onNextPage()"> > </button>
+  </div>
+
+  <button class="secondary" (click)="onCreateSkill()"> o </button>
+</div>
