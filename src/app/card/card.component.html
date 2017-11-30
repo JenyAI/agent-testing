@@ -1,0 +1,7 @@
+<div *ngIf="!selected">
+	<p> {{ data.src }} </p>
+</div>
+
+<div *ngIf="selected">
+	<input placeholder="Image url" [(ngModel)]="data.src" (focusout)="onUpdateCard()" >
+</div>
