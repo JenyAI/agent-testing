@@ -3,7 +3,28 @@
 </div>
 
 <div id="content">
-  <app-skill *ngFor="let s of displayedSkills" [data]="s"></app-skill>
+	<div *ngFor="let s of displayedSkills" class="item">
+		<app-skill
+			class="flex-grow"
+			[data]="s"
+			[selected]="s.id === selectedSkill"
+			(click)="onSelectedSkill(s.id)" >
+		</app-skill>
+
+		<button
+			*ngIf="s.id === selectedSkill"
+			class="primary flex-auto"
+			(click)="onEndEditing()" >
+			done
+		</button>
+
+		<button
+			*ngIf="s.id !== selectedSkill"
+			class="delete flex-auto"
+			(click)="onDeleteSkill(s.id)" >
+			del
+		</button>
+	</div>
 </div>
 
 <div id="actions">

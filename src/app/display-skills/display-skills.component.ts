@@ -11,6 +11,7 @@ import { SkillService } from '../_services/skill.service';
 export class DisplaySkillsComponent implements OnInit, OnDestroy  {
 
   private skills: any[ ];
+  private selectedSkill: number; // id of the selected skill
   private skillSubscription: Subscription;
 
 	private filter: string = '';
@@ -56,6 +57,45 @@ export class DisplaySkillsComponent implements OnInit, OnDestroy  {
 		};
 
     this.skillService.createSkill(skill);
+  }
+
+	/*  Trigger the event to delete a skill.
+
+    PARAMS
+      id (number)
+
+    RETURN
+      none
+  */
+  private onDeleteSkill(id: number): void {
+
+    this.skillService.deleteSkill(id);
+  }
+
+  /*  End the edition of a skill.
+
+    PARAMS
+      none
+
+    RETURN
+      none
+  */
+  private onEndEditing(): void {
+
+		this.selectedSkill = -1;
+  }
+
+  /*  Trigger the event to create a new skill
+
+    PARAMS
+      id (number): id of the selected skill
+
+    RETURN
+      none
+  */
+  private onSelectedSkill(id: number): void {
+
+		this.selectedSkill = id;
   }
 
   /*  Increment the page number
