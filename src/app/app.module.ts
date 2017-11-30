@@ -6,6 +6,8 @@ import { RouterModule }   from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AgentInformationComponent } from './agent-information/agent-information.component';
+import { CardComponent } from './card/card.component';
+import { DisplayCardsComponent } from './display-cards/display-cards.component';
 import { DisplaySituationsComponent } from './display-situations/display-situations.component';
 import { DisplaySkillsComponent } from './display-skills/display-skills.component';
 import { PerformTestComponent } from './perform-test/perform-test.component';
@@ -14,6 +16,7 @@ import { SituationComponent } from './situation/situation.component';
 import { SkillComponent } from './skill/skill.component';
 
 import { AgentService } from './_services/agent.service';
+import { CardService } from './_services/card.service';
 import { SituationService } from './_services/situation.service';
 import { SkillService } from './_services/skill.service';
 import { UuidService } from './_services/uuid.service';
@@ -23,6 +26,8 @@ import { WebsocketService } from './_services/websocket.service';
   declarations: [
     AppComponent,
     AgentInformationComponent,
+		CardComponent,
+		DisplayCardsComponent,
     DisplaySituationsComponent,
 		DisplaySkillsComponent,
     PerformTestComponent,
@@ -49,6 +54,10 @@ import { WebsocketService } from './_services/websocket.service';
           component: DisplaySkillsComponent
         },
         {
+          path: 'cards',
+          component: DisplayCardsComponent
+        },
+        {
           path: 'test',
           component: PerformTestComponent
         },
@@ -61,6 +70,7 @@ import { WebsocketService } from './_services/websocket.service';
   ],
   providers: [
     AgentService,
+		CardService,
     SituationService,
     SkillService,
     UuidService,

@@ -1,0 +1,71 @@
+@import "../../styles/colors.scss";
+
+:host {
+  display: flex;
+	flex-direction: column;
+  margin-bottom: 5px;
+
+  background-color: $transparent;
+
+	&:hover {
+		background-color: $blue-l;
+		cursor: pointer;
+	}
+}
+
+div {
+	display: flex;
+	margin-bottom: 5px;
+}
+
+button {
+  display: block;
+  box-sizing: border-box;
+  margin: 0 0.25em;
+  padding: 1em;
+
+  background-color: $blue;
+  border: 2px solid $blue;
+  border-radius: 5px;
+  color: $white;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:active {
+    background-color: $blue-l;
+    color: $blue;
+  }
+
+  &[class*="delete"] {
+    background-color: $red;
+    border: 2px solid $red;
+    color: $white;
+
+    &:active {
+      background-color: $transparent;
+      color: $red;
+    }
+  }
+}
+
+input,
+select
+{
+  box-sizing: border-box;
+  padding: 1em;
+  margin: 0 0.25em;
+	flex-grow: 1;
+	min-width: 0;
+
+  background-color: $transparent;
+  border: none;
+  border-bottom: 2px solid $grey;
+
+  &:focus {
+    border-bottom: 2px solid $blue;
+  }
+
+	&[role="title"] {
+		flex-grow: 2;
+	}
+}

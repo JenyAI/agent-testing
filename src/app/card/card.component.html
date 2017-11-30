@@ -1,0 +1,17 @@
+<div *ngIf="!selected">
+	<p> {{ data.src }} <span class="grey-d"> {{ selectedSkill?.title }} </span> </p>
+</div>
+
+<div *ngIf="selected">
+	<input placeholder="Image url" [(ngModel)]="data.src" (focusout)="onUpdateCard()" >
+
+	<select class="skills" (change)="onSelectedSkill($event)">
+	  <option value=""> </option>
+	  <option
+	    *ngFor="let i of skills"
+	    [value]="i.id"
+	    [selected]="i.id === data.skillId" >
+	      {{ i.title }}
+	    </option>
+	</select>
+</div>

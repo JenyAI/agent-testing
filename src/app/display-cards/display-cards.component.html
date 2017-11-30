@@ -1,0 +1,46 @@
+<div id="menu">
+	<input placeholder="Filter" [(ngModel)]="filter" (input)="updateDisplayedCards()" >
+</div>
+
+<div id="content">
+	<div *ngFor="let s of displayedCards" class="item">
+		<app-card
+			class="flex-grow"
+			[data]="s"
+			[selected]="s.id === selectedCard"
+			(click)="onSelectedCard(s.id)" >
+		</app-card>
+
+		<button
+			*ngIf="s.id === selectedCard"
+			class="primary flex-auto"
+			(click)="onEndEditing()" >
+			done
+		</button>
+
+		<button
+			*ngIf="s.id !== selectedCard"
+			class="delete flex-auto"
+			(click)="onDeleteCard(s.id)" >
+			del
+		</button>
+	</div>
+</div>
+
+<div id="actions">
+  <button class="primary" (click)="onCreateCard()"> + </button>
+
+  <div id="actions-pages">
+    <button class="primary" (click)="onPreviousPage()"> < </button>
+
+    <div style="padding: 0 5px; text-align:center;">
+      <div *ngIf="totalPages === 0"> 0 / 0 </div>
+      <div *ngIf="totalPages !== 0"> {{page + 1}} / {{totalPages}} </div>
+      <div> ({{displayedCards.length}} cards) </div>
+    </div>
+
+    <button class="primary" (click)="onNextPage()"> > </button>
+  </div>
+
+  <button class="secondary" (click)="onCreateCard()"> o </button>
+</div>
